@@ -1,0 +1,30 @@
+{
+  "name": "matchcare-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asistaainun/matchcare-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/asistaainun/matchcare-system/issues"
+  },
+  "homepage": "https://github.com/asistaainun/matchcare-system#readme",
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
+    "axios": "^1.10.0",
+    "lucide-react": "^0.525.0",
+    "react-hook-form": "^7.59.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.6.3",
+    "react-toastify": "^11.0.5"
+  }
+}
