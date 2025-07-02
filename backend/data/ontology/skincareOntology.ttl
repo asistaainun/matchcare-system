@@ -12,6 +12,44 @@
 #    Object Properties
 #################################################################
 
+###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology#incompatibleWith
+:incompatibleWith rdf:type owl:ObjectProperty ,
+                           owl:SymmetricProperty ;
+                  rdfs:domain :Ingredient ;
+                  rdfs:range :Ingredient .
+
+
+###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology#synergisticWith
+:synergisticWith rdf:type owl:ObjectProperty ,
+                          owl:SymmetricProperty ;
+                 rdfs:domain :Ingredient ;
+                 rdfs:range :Ingredient .
+
+
+###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology#userAvoids
+:userAvoids rdf:type owl:ObjectProperty ;
+            rdfs:domain :User ;
+            rdfs:range :AllergenType .
+
+
+###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology#userHasConcern
+:userHasConcern rdf:type owl:ObjectProperty ;
+                rdfs:domain :User ;
+                rdfs:range :SkinConcern .
+
+
+###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology#userHasSkinType
+:userHasSkinType rdf:type owl:ObjectProperty ;
+                 rdfs:domain :User ;
+                 rdfs:range :SkinType .
+
+
+###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology#userPrefers
+:userPrefers rdf:type owl:ObjectProperty ;
+             rdfs:domain :User ;
+             rdfs:range :Ingredient .
+
+
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/avoidFor
 :avoidFor rdf:type owl:ObjectProperty ;
           rdfs:domain :Ingredient ;
@@ -35,7 +73,8 @@
 :containsIngredient rdf:type owl:ObjectProperty ;
                     owl:inverseOf :foundInProduct ;
                     rdfs:domain :Product ;
-                    rdfs:range :Ingredient .
+                    rdfs:range :Ingredient ;
+                    rdfs:comment "Product contains this ingredient" .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/excludeAllergenType
@@ -45,7 +84,9 @@
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/foundInProduct
-:foundInProduct rdf:type owl:ObjectProperty .
+:foundInProduct rdf:type owl:ObjectProperty ;
+                rdfs:domain :Ingredient ;
+                rdfs:range :Product .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/hasFormulationTrait
@@ -68,11 +109,15 @@
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/hasProduct
-:hasProduct rdf:type owl:ObjectProperty .
+:hasProduct rdf:type owl:ObjectProperty ;
+            rdfs:domain :Brand ;
+            rdfs:range :Product .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/isKeyIngredientOf
-:isKeyIngredientOf rdf:type owl:ObjectProperty .
+:isKeyIngredientOf rdf:type owl:ObjectProperty ;
+                   rdfs:domain :KeyIngredient ;
+                   rdfs:range :Product .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/isKeyIngredientType
@@ -106,7 +151,8 @@
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/similarTo
-:similarTo rdf:type owl:ObjectProperty ;
+:similarTo rdf:type owl:ObjectProperty ,
+                    owl:SymmetricProperty ;
            rdfs:domain :Product ;
            rdfs:range :Product .
 
@@ -196,6 +242,11 @@
 #################################################################
 #    Classes
 #################################################################
+
+###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology#User
+:User rdf:type owl:Class ;
+      rdfs:label "User" .
+
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/AcneTreatment
 :AcneTreatment rdf:type owl:Class ;
@@ -482,9 +533,22 @@
 #    Individuals
 #################################################################
 
+###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology#Sulfate
+:Sulfate rdf:type owl:NamedIndividual ,
+                  :AllergenType .
+
+
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/AHA
 :AHA rdf:type owl:NamedIndividual ,
               :KeyIngredient ;
+     :incompatibleWith :BHA ,
+                       :Retinoid ;
+     :hasFunction :Exfoliant ;
+     :providesIngredientBenefit :Brightening ,
+                                :GoodForTexture ;
+     :recommendedFor :Combination ,
+                     :Normal ,
+                     :Oily ;
      rdfs:label "Alpha Hydroxy Acid" .
 
 
@@ -510,7 +574,8 @@
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/AlcoholFree
 :AlcoholFree rdf:type owl:NamedIndividual ,
-                      :FormulationTrait .
+                      :FormulationTrait ;
+             :excludeAllergenType :Alcohol .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/Anti-Acne
@@ -536,6 +601,12 @@
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/BHA
 :BHA rdf:type owl:NamedIndividual ,
               :KeyIngredient ;
+     :hasFunction :Exfoliant ;
+     :providesIngredientBenefit :AcneFighter ,
+                                :GoodForTexture ;
+     :recommendedFor :Combination ,
+                     :Oily ;
+     :treatsConcern :Acne ;
      rdfs:label "Beta Hydroxy Acid" .
 
 
@@ -557,6 +628,13 @@
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/Ceramides
 :Ceramides rdf:type owl:NamedIndividual ,
                     :KeyIngredient ;
+           :synergisticWith :HyaluronicAcid ;
+           :hasFunction :Emollient ;
+           :providesIngredientBenefit :Hydrating ,
+                                      :ReducesIrritation ;
+           :recommendedFor :Dry ,
+                           :Normal ;
+           :treatsConcern :Sensitivity ;
            rdfs:label "Ceramides" .
 
 
@@ -638,7 +716,8 @@
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/FragranceFree
 :FragranceFree rdf:type owl:NamedIndividual ,
-                        :FormulationTrait .
+                        :FormulationTrait ;
+               :excludeAllergenType :Fragrance .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/FungalAcne
@@ -674,6 +753,14 @@
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/HyaluronicAcid
 :HyaluronicAcid rdf:type owl:NamedIndividual ,
                          :KeyIngredient ;
+                :hasFunction :Humectant ;
+                :providesIngredientBenefit :Hydrating ,
+                                           :SkinConditioning ;
+                :recommendedFor :Combination ,
+                                :Dry ,
+                                :Normal ,
+                                :Oily ;
+                :treatsConcern :Dryness ;
                 rdfs:label "Hyaluronic Acid" .
 
 
@@ -690,6 +777,7 @@
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/MineralUVFilter
 :MineralUVFilter rdf:type owl:NamedIndividual ,
                           :KeyIngredient ;
+                 :recommendedFor :Oily ;
                  rdfs:label "Mineral UV Filter" .
 
 
@@ -701,6 +789,13 @@
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/Niacinamide
 :Niacinamide rdf:type owl:NamedIndividual ,
                       :KeyIngredient ;
+             :synergisticWith :HyaluronicAcid ;
+             :hasFunction :SkinConditioning ;
+             :providesIngredientBenefit :Brightening ,
+                                        :ReduceRedness ,
+                                        :ReducesLargePores ;
+             :recommendedFor :Combination ;
+             :treatsConcern :Oiliness ;
              rdfs:label "Niacinamide" .
 
 
@@ -732,12 +827,14 @@
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/PHA
 :PHA rdf:type owl:NamedIndividual ,
               :KeyIngredient ;
+     :hasFunction :Exfoliant ;
      rdfs:label "Polyhydroxy Acid" .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/Panthenol
 :Panthenol rdf:type owl:NamedIndividual ,
                     :KeyIngredient ;
+           :hasFunction :Soothing ;
            rdfs:label "Panthenol" .
 
 
@@ -748,12 +845,14 @@
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/ParabenFree
 :ParabenFree rdf:type owl:NamedIndividual ,
-                      :FormulationTrait .
+                      :FormulationTrait ;
+             :excludeAllergenType :Paraben .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/Peptides
 :Peptides rdf:type owl:NamedIndividual ,
                    :KeyIngredient ;
+          :synergisticWith :HyaluronicAcid ;
           rdfs:label "Peptides" .
 
 
@@ -790,6 +889,15 @@
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/Retinoid
 :Retinoid rdf:type owl:NamedIndividual ,
                    :KeyIngredient ;
+          :incompatibleWith :AHA ,
+                            :BHA ,
+                            :VitaminC ;
+          :providesIngredientBenefit :GoodForTexture ,
+                                     :HelpsWithAntiAging ;
+          :recommendedFor :Combination ,
+                          :Normal ,
+                          :Oily ;
+          :treatsConcern :Wrinkles ;
           rdfs:label "Retinoid" .
 
 
@@ -805,7 +913,8 @@
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/SiliconeFree
 :SiliconeFree rdf:type owl:NamedIndividual ,
-                       :FormulationTrait .
+                       :FormulationTrait ;
+              :excludeAllergenType :Silicone .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/SkinBrightening
@@ -836,7 +945,8 @@
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/SulfateFree
 :SulfateFree rdf:type owl:NamedIndividual ,
-                      :FormulationTrait .
+                      :FormulationTrait ;
+             :excludeAllergenType :Sulfate .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/Surfactant
@@ -862,12 +972,24 @@
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/VitaminC
 :VitaminC rdf:type owl:NamedIndividual ,
                    :KeyIngredient ;
+          :incompatibleWith :Retinoid ;
+          :synergisticWith :VitaminE ;
+          :hasFunction :Antioxidant ;
+          :providesIngredientBenefit :Brightening ,
+                                     :HelpsWithDarkSpots ;
+          :recommendedFor :Combination ,
+                          :Dry ,
+                          :Normal ,
+                          :Oily ;
+          :treatsConcern :DarkSpots ;
           rdfs:label "Vitamin C" .
 
 
 ###  http://www.semanticweb.org/msilaptop/ontologies/2025/4/skincareOntology/VitaminE
 :VitaminE rdf:type owl:NamedIndividual ,
                    :KeyIngredient ;
+          :hasFunction :Antioxidant ;
+          :recommendedFor :Combination ;
           rdfs:label "Vitamin E" .
 
 
