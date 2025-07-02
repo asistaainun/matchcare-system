@@ -5,6 +5,7 @@ const Product = require('./Product');
 const Ingredient = require('./Ingredient');
 const UserFavorite = require('./UserFavorite');
 const ProductMatchScore = require('./ProductMatchScore');
+const GuestSession = require('./GuestSession');
 
 // Define associations
 User.hasOne(UserProfile, { 
@@ -43,6 +44,18 @@ ProductMatchScore.belongsTo(User, {
   foreignKey: 'userId'
 });
 
+// Guest Session associations
+GuestSession.belongsTo(User, {
+  foreignKey: 'convertedToUserId',
+  as: 'convertedUser',
+  constraints: false
+});
+User.hasMany(GuestSession, {
+  foreignKey: 'convertedToUserId',
+  as: 'guestSessions',
+  constraints: false
+});
+
 const models = {
   User,
   UserProfile,
@@ -50,6 +63,7 @@ const models = {
   Ingredient,
   UserFavorite,
   ProductMatchScore,
+  GuestSession,
   sequelize
 };
 

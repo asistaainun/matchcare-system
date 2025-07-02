@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Star, ShoppingCart, Eye } from 'lucide-react';
+import { Heart, Star, Eye } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useGuest } from '../../contexts/GuestContext';
 import ProductImage from '../Common/ProductImage';
@@ -41,31 +41,6 @@ const ProductCard = ({ product, showMatchScore = false, className = '' }) => {
     // Track viewed product for guests
     if (!isAuthenticated) {
       addViewedProduct(product.id);
-    }
-  };
-
-  const handleFavoriteClick = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!isAuthenticated) {
-      toast.error('Please login to add favorites');
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      if (isFavorite) {
-        await removeFromFavorites(product.id);
-        setIsFavorite(false);
-      } else {
-        await addToFavorites(product.id);
-        setIsFavorite(true);
-      }
-    } catch (error) {
-      console.error('Error updating favorites:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -122,9 +97,9 @@ const ProductCard = ({ product, showMatchScore = false, className = '' }) => {
           <button
             onClick={handleFavoriteClick}
             disabled={isLoading}
-            className={`absolute top-2 right-2 p-2 rounded-full transition-colors duration-200 ${
-              showMatchScore && product.matchScore ? 'top-10' : 'top-2'
-            } ${
+            className={`absolute ${
+              showMatchScore && product.matchScore ? 'top-10 right-2' : 'top-2 right-2'
+            } p-2 rounded-full transition-colors duration-200 ${
               isFavorite
                 ? 'bg-red-500 text-white'
                 : 'bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-800'
